@@ -1,17 +1,13 @@
 <template>
   <div class="product">
     <div class="product-image">
-      <img v-bind:src="image" v-bind:alt="altText" />
+      <img :src="image" :alt="imageAltText" />
     </div>
 
     <div class="product-info">
-      <h1>{{ product }}</h1>
+      <h1>{{ title }}</h1>
       <p v-if="inStock">In Stock by data</p>
       <p v-else>Out of Stock</p>
-
-      <!-- <span v-if="onSale">On Sale!</span>
-      <p v-if="inventory > 10">In Stock by conditional</p>
-      <p v-show="inStock">In Stock by v-show</p> -->
 
       <h3>Details:</h3>
       <ul>
@@ -24,12 +20,12 @@
       </ul>
 
       <h3>Colors:</h3>
-      <div class="color-box" v-for="variant in variants"
+      <div class="color-box" v-for="(variant, index) in variants"
             :key="variant.variantId"
             :style="{ backgroundColor: variant.variantColor }"
-            @mouseover="updateProduct(variant.variantImage)" />
+            @mouseover="updateProduct(index)" />
 
-      <button @click="addToCart">Add to cart</button>
+      <button :class="{ disabledButton: !inStock }" :disabled="!inStock" @click="addToCart">Add to cart</button>
       <button :class="{ disabledButton: cart <= 0 }" :disabled="cart <= 0"  @click="removeFromCart">Remove from cart</button>
 
       <div class="cart">
@@ -45,40 +41,62 @@
 export default {
   data() {
     return {
+      brand: 'Nuxt and Vue',
       product: 'Socks',
-      altText: 'A pair of socks',
-      image: '/img/socks-blue.jpg',
-      inStock: true,
+      selectedVariant: 0,
       onSale: true,
-      inventory: 100,
+      cart: 0,
       details: ['80% cotton', '20% polyester', 'Gender-neutral'],
       sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
       variants: [
         {
           variantId: 2235,
           variantColor: 'blue',
-          variantImage: '/img/socks-blue.jpg'
+          variantImage: '/img/socks-blue.jpg',
+          variantImageText: 'Image of blue socks',
+          variantQuantity: 10
         },
         {
           variantId: 2234,
           variantColor: 'green',
-          variantImage: '/img/socks-green.jpg'
+          variantImage: '/img/socks-green.jpg',
+          variantImageText: 'Image of green socks',
+          variantQuantity: 0
         }
-      ],
-      cart: 0,
+      ]
     };
   },
   methods: {
     addToCart() {
       this.cart += 1;
     },
-    updateProduct(variantImage) {
-      this.image = variantImage;
+    updateProduct(index) {
+      this.selectedVariant = index;
     },
     removeFromCart() {
       this.cart -= this.cart > 0 ?  1 : 0;
     }
-  }
+  },
+  computed: {
+    title() {
+      return `${this.brand} ${this.product}`;
+    },
+    image() {
+      return this.variants[this.selectedVariant].variantImage;
+    },
+    imageAltText() {
+      return this.variants[this.selectedVariant].variantImageText;
+    },
+    inStock() {
+      return this.variants[this.selectedVariant].variantQuantity;
+    },
+    sale() {
+        if (this.onSale) {
+          return this.brand + ' ' + this.product + ' are on sale!'
+        } 
+          return  this.brand + ' ' + this.product + ' are not on sale'
+      }
+    }
 };
 </script>
 
