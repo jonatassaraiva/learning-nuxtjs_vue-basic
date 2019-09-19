@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="nav-bar"></div>
     <nuxt />
   </div>
 </template>
@@ -24,32 +25,15 @@ html {
   margin: 0;
 }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
+body {
+  font-family: tahoma;
+  color: #282828;
+  margin: 0px;
 }
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+.nav-bar {
+  background: linear-gradient(-90deg, #84CF6A, #16C0B0);
+  height: 60px;
+  margin-bottom: 15px;
 }
 </style>
