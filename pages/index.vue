@@ -24,12 +24,13 @@
       </ul>
 
       <h3>Colors:</h3>
-      <div v-for="variant in variants" :key="variant.variantId" @mouseover="updateProduct(variant.variantImage)">
-        <p>{{ variant.variantColor }}</p>
-      </div>
+      <div class="color-box" v-for="variant in variants"
+            :key="variant.variantId"
+            :style="{ backgroundColor: variant.variantColor }"
+            @mouseover="updateProduct(variant.variantImage)" />
 
-      <button v-on:click="addToCart">Add to cart</button>
-      <button @click="removeFromCart">Remove from cart</button>
+      <button @click="addToCart">Add to cart</button>
+      <button :class="{ disabledButton: cart <= 0 }" :disabled="cart <= 0"  @click="removeFromCart">Remove from cart</button>
 
       <div class="cart">
         <p>Cart({{ cart }})</p>
