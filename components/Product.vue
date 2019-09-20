@@ -10,13 +10,8 @@
       <p v-else>Out of Stock</p>
       <p>Shipping: {{ shipping }}</p>
 
-      <h3>Details:</h3>
-      <Details :type="'details'" :details="details" />
-
-      <h3>Sizes:</h3>
-      <ul>
-        <li v-for="(size, index) in sizes" :key="'size_'+index">{{ size }}</li>
-      </ul>
+      <Details :title="'Details'" :type="'details'" :details="details" />
+      <Details :title="'Sizes'" :type="'size'" :details="sizes" />
 
       <h3>Colors:</h3>
       <div class="color-box" v-for="(variant, index) in variants"
