@@ -27,7 +27,7 @@ html {
 
 body {
   font-family: tahoma;
-  color: #282828;
+  color:#282828;
   margin: 0px;
 }
 
@@ -35,5 +35,19 @@ body {
   background: linear-gradient(-90deg, #84CF6A, #16C0B0);
   height: 60px;
   margin-bottom: 15px;
+}
+
+button {
+  margin-top: 30px;
+  border: none;
+  background-color: #1E95EA;
+  color: white;
+  height: 40px;
+  width: 100px;
+  font-size: 14px;
+} 
+
+.disabledButton {
+  background-color: #d8d8d8;
 }
 </style>

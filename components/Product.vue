@@ -22,16 +22,30 @@
       <button :class="{ disabledButton: !inStock }" :disabled="!inStock" @click="addToCart">Add to cart</button>
     </div>
 
+    <review @review-submitted="addReview"/>
+
+    <div>
+      <p v-if="!reviews.length">There are no reviews yet.</p>
+      <ul v-else>
+          <li v-for="(review, index) in reviews" :key="index">
+            <p>{{ review.name }}</p>
+            <p>Rating:{{ review.rating }}</p>
+            <p>{{ review.review }}</p>
+          </li>
+      </ul>
+    </div>
     <span>More information: <a href="/pdf/Vue-Essentials-Cheat-Sheet.pdf" target="_blank">Vue-Essentials-Cheat-Sheet</a></span>
   </div>
 </template>
 
 <script>
 import Details from '@/components/Details'
+import Review from '@/components/Review'
 
 export default {
   components: {
-    Details
+    Details,
+    Review
   },
   props: {
     premium: {
@@ -62,7 +76,8 @@ export default {
           variantImageText: 'Image of green socks',
           variantQuantity: 0
         }
-      ]
+      ],
+      reviews: []
     };
   },
   methods: {
@@ -72,8 +87,8 @@ export default {
     updateProduct(index) {
       this.selectedVariant = index;
     },
-    removeFromCart() {
-      this.$emit('remove-from-cart');
+    addReview(productReview) {
+      this.reviews.push(productReview);
     }
   },
   computed: {
@@ -102,65 +117,30 @@ export default {
 <style>
 .product {
   display: flex;
+  flex-flow: wrap;
+  padding: 1rem;
 }
 
 img {
   border: 1px solid #d8d8d8;
   width: 70%;
   margin: 40px;
-  box-shadow: 0px 0.5px 1px #d8d8d8;
+  box-shadow: 0px .5px 1px #d8d8d8;
 }
 
 .product-image {
-  flex-basis: 700px;
+  width: 80%;
 }
 
+.product-image,
 .product-info {
   margin-top: 10px;
-  flex-basis: 500px;
+  width: 50%;
 }
 
 .color-box {
   width: 40px;
   height: 40px;
   margin-top: 5px;
-}
-
-.cart {
-  margin-right: 25px;
-  float: right;
-  border: 1px solid #d8d8d8;
-  padding: 5px 20px;
-}
-
-button {
-  margin-top: 30px;
-  border: none;
-  background-color: #1e95ea;
-  color: white;
-  height: 40px;
-  width: 100px;
-  font-size: 14px;
-}
-
-.disabledButton {
-  background-color: #d8d8d8;
-}
-
-.review-form {
-  width: 30%;
-  padding: 20px;
-  border: 1px solid #d8d8d8;
-}
-
-input {
-  width: 100%;
-  height: 25px;
-  margin-bottom: 20px;
-}
-
-textarea {
-  width: 100%;
-  height: 60px;
 }
 </style>

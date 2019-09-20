@@ -36,3 +36,13 @@ export default {
   }
 };
 </script>
+
+
+<style>
+.cart {
+  margin-right: 25px;
+  float: right;
+  border: 1px solid #d8d8d8;
+  padding: 5px 20px;
+}
+</style>
