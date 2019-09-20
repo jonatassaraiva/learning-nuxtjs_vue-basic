@@ -1,9 +1,15 @@
 <template>
-  <product :premium="premium" />
+  <div>
+    <div class="cart">
+      <p>Cart({{ cart.length }})</p>
+      <button :class="{ disabledButton: !hasItems }" :disabled="!hasItems" @click="removeFromCart">Remove from cart</button>
+    </div>
+    <product :premium="premium" @add-to-cart="addToCart" />
+  </div>
 </template>
 
 <script>
-import Product from '@/components/Product';
+import Product from "@/components/Product";
 
 export default {
   components: {
@@ -11,7 +17,21 @@ export default {
   },
   data() {
     return {
-      premium: false
+      premium: false,
+      cart: []
+    };
+  },
+  methods: {
+    addToCart(id) {
+      this.cart.push(id);
+    },
+    removeFromCart() {
+      this.cart.splice(0, 1);
+    }
+  },
+  computed: {
+    hasItems() {
+      return this.cart.length > 0;
     }
   }
 };

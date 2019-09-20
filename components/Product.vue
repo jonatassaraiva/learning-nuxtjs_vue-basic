@@ -20,11 +20,6 @@
             @mouseover="updateProduct(index)" />
 
       <button :class="{ disabledButton: !inStock }" :disabled="!inStock" @click="addToCart">Add to cart</button>
-      <button :class="{ disabledButton: cart <= 0 }" :disabled="cart <= 0"  @click="removeFromCart">Remove from cart</button>
-
-      <div class="cart">
-        <p>Cart({{ cart }})</p>
-      </div>
     </div>
 
     <span>More information: <a href="/pdf/Vue-Essentials-Cheat-Sheet.pdf" target="_blank">Vue-Essentials-Cheat-Sheet</a></span>
@@ -50,7 +45,6 @@ export default {
       product: 'Socks',
       selectedVariant: 0,
       onSale: true,
-      cart: 0,
       details: ['80% cotton', '20% polyester', 'Gender-neutral'],
       sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
       variants: [
@@ -73,18 +67,18 @@ export default {
   },
   methods: {
     addToCart() {
-      this.cart += 1;
+      this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
     },
     updateProduct(index) {
       this.selectedVariant = index;
     },
     removeFromCart() {
-      this.cart -= this.cart > 0 ?  1 : 0;
+      this.$emit('remove-from-cart');
     }
   },
   computed: {
     title() {
-      return `${this.brand} ${this.product}`;
+      return `${this.brand} - ${this.product}`;
     },
     image() {
       return this.variants[this.selectedVariant].variantImage;
